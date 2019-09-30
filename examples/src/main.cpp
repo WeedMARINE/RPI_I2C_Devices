@@ -9,7 +9,7 @@
 #include <ctime>
 #include "headers/MLX90640_API.h"
 
-#define ANSI_COLOR_RED     "\x1b[31m"
+/*#define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
 #define ANSI_COLOR_YELLOW  "\x1b[33m"
 #define ANSI_COLOR_BLUE    "\x1b[34m"
@@ -19,9 +19,10 @@
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
 //#define FMT_STRING "%+06.2f "
-#define FMT_STRING "\u2588\u2588"
+#define FMT_STRING "\u2588\u2588"*/
 
 #define MLX_I2C_ADDR 0x33
+#define INA_I2C_ADDR 0x33
 
 int main(){
     int state = 0;
@@ -70,10 +71,11 @@ int main(){
 
         t = std::time(0);
         fout << t << ", " << mlx90640To[760]<< "\n";
-        // test.cpp code for displaying screen
+        
         //printf("Subpage: %d\n", subpage);
         //MLX90640_SetSubPage(MLX_I2C_ADDR,!subpage);
 
+        // test.cpp code for displaying screen
         /*
         for(int x = 0; x < 32; x++){
             for(int y = 0; y < 24; y++){

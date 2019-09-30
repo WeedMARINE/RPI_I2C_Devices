@@ -19,7 +19,7 @@
 
 I2C i2c(p9, p10);
 
-void MLX90640_I2CInit()
+void I2CInit()
 {   
     i2c.stop();
 }
@@ -66,7 +66,7 @@ int MLX90640_I2CRead(uint8_t slaveAddr, uint16_t startAddress, uint16_t nMemAddr
     return 0;   
 } 
 
-void MLX90640_I2CFreqSet(int freq)
+void I2CFreqSet(int freq)
 {
     i2c.frequency(1000*freq);
 }

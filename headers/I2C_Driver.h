@@ -18,15 +18,18 @@
 #define _I2C_Driver_H_
 
 #include <stdint.h>
+    void I2CInit(void);
+    void I2CFreqSet(int freq);
+
     //functions for MLX90640 
-    void MLX90640_I2CInit(void);
+    //void MLX90640_I2CInit(void);
     int MLX90640_I2CRead(uint8_t slaveAddr,uint16_t startAddress, uint16_t nMemAddressRead, uint16_t *data);
     int MLX90640_I2CWrite(uint8_t slaveAddr,uint16_t writeAddress, uint16_t data);
-    void MLX90640_I2CFreqSet(int freq);
+    //void MLX90640_I2CFreqSet(int freq);
 
     //functions for INA219 
-    void INA219_I2CInit(void);
+    //void INA219_I2CInit(void);
     int INA219_I2CRead(uint8_t slaveAddr,uint16_t startAddress, uint16_t nMemAddressRead, uint16_t *data);
     int INA219_I2CWrite(uint8_t slaveAddr,uint16_t writeAddress, uint16_t data);
-    void INA219_I2CFreqSet(int freq);
+    //void INA219_I2CFreqSet(int freq);
 #endif

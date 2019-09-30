@@ -15,7 +15,7 @@
  *
  */
 #include "mbed.h"
-#include "MLX90640_I2C_Driver.h"
+#include "I2C_Driver.h"
 
 I2C i2c(p9, p10);
 

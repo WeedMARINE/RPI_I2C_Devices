@@ -140,3 +140,4 @@ sudo apt install libsdl2-dev
 ```
 
 On Raspbian Lite you may wish to build SDL2 from source with X support disabled to avoid pulling in ~200MB of dependencies. Before configuring/compiling ensure you have `libudev-dev` installed for input support.
+# RPI_I2C_Devices

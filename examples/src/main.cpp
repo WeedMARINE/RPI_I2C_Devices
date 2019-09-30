@@ -1,9 +1,12 @@
+//Modified from test.cpp example
+
 #include <stdint.h>
 #include <iostream>
 #include <cstring>
 #include <fstream>
 #include <chrono>
 #include <thread>
+#include <ctime>
 #include "headers/MLX90640_API.h"
 
 #define ANSI_COLOR_RED     "\x1b[31m"
@@ -30,11 +33,13 @@ int main(){
     float eTa;
     static uint16_t data[768*sizeof(float)];
 
-    std::fstream fs;
+    std::fstream fout;
+    fout.open("reportcard.csv", std::ios::out | std::ios::app);
+    std::time_t t;  // t is an integer type 
 
     MLX90640_SetDeviceMode(MLX_I2C_ADDR, 0);
     MLX90640_SetSubPageRepeat(MLX_I2C_ADDR, 0);
-    MLX90640_SetRefreshRate(MLX_I2C_ADDR, 0x01);
+    MLX90640_SetRefreshRate(MLX_I2C_ADDR, 0b010);
     MLX90640_SetChessMode(MLX_I2C_ADDR);
     //MLX90640_SetSubPage(MLX_I2C_ADDR, 0);
     printf("Configured...\n");
@@ -49,7 +54,9 @@ int main(){
     int frames = 30;
     int subpage;
     static float mlx90640To[768];
-    while (1){
+    
+    //while (1){
+    for (int i = 0; i < 100; i++){
         state = !state;
         //printf("State: %d \n", state);
         MLX90640_GetFrameData(MLX_I2C_ADDR, frame);
@@ -61,9 +68,13 @@ int main(){
         MLX90640_BadPixelsCorrection((&mlx90640)->brokenPixels, mlx90640To, 1, &mlx90640);
         MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
 
-        printf("Subpage: %d\n", subpage);
+        t = std::time(0);
+        fout << t << ", " << mlx90640To[760]<< "\n";
+        // test.cpp code for displaying screen
+        //printf("Subpage: %d\n", subpage);
         //MLX90640_SetSubPage(MLX_I2C_ADDR,!subpage);
 
+        /*
         for(int x = 0; x < 32; x++){
             for(int y = 0; y < 24; y++){
                 //std::cout << image[32 * y + x] << ",";
@@ -92,9 +103,12 @@ int main(){
                 }
             }
             std::cout << std::endl;
-        }
+        }*/
         //std::this_thread::sleep_for(std::chrono::milliseconds(20));
-        printf("\x1b[33A");
+        //printf("\x1b[33A");
     }
+    
+    fout.close(); 
+
     return 0;
 }

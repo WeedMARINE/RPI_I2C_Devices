@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-#include "MLX90640_I2C_Driver.h"
+#include "I2C_Driver.h"
 #include <iostream>
 #include <unistd.h>
 #include <stdio.h>

@@ -116,52 +116,37 @@ int MLX90640_I2CWrite(uint8_t slaveAddr, uint16_t writeAddress, uint16_t data)
 }
 
 //Read/Write functions for INA219
-int INA219_I2CRead(uint8_t slaveAddr, uint8_t startAddress, uint16_t *data)
+int INA219_I2CRead(uint8_t slaveAddr, uint16_t startAddress, uint16_t nMemAddressRead, uint16_t *data)
 {
     if(!i2c_fd){
         i2c_fd = open(i2c_device, O_RDWR);
     }
 
-    uint16_t nMemAddressRead = 1;
-    unsigned int usecs = 1000;
-
     int result;
-    char cmd[1] = {(char)(startAddress)};
+    char cmd[2] = {(char)(startAddress >> 8), (char)(startAddress & 0xFF)};
     char buf[1664];
     uint16_t *p = data;
-    struct i2c_msg i2c_messages_R[1];
-    struct i2c_msg i2c_messages_W[1];
-    struct i2c_rdwr_ioctl_data i2c_messageset_R[1];
-    struct i2c_rdwr_ioctl_data i2c_messageset_W[1];
+    struct i2c_msg i2c_messages[2];
+    struct i2c_rdwr_ioctl_data i2c_messageset[1];
 
-    i2c_messages_W[0].addr = slaveAddr;
-    i2c_messages_W[0].flags = 0;
-    i2c_messages_W[0].len = 2;
-    i2c_messages_W[0].buf = (I2C_MSG_FMT*)cmd;
+    i2c_messages[0].addr = slaveAddr;
+    i2c_messages[0].flags = 0;
+    i2c_messages[0].len = 2;
+    i2c_messages[0].buf = (I2C_MSG_FMT*)cmd;
 
-    i2c_messages_R[0].addr = slaveAddr;
-    i2c_messages_R[0].flags = I2C_M_RD | I2C_M_NOSTART;
-    i2c_messages_R[0].len = nMemAddressRead * 2;
-    i2c_messages_R[0].buf = (I2C_MSG_FMT*)buf;
+    i2c_messages[1].addr = slaveAddr;
+    i2c_messages[1].flags = I2C_M_RD | I2C_M_NOSTART;
+    i2c_messages[1].len = nMemAddressRead * 2;
+    i2c_messages[1].buf = (I2C_MSG_FMT*)buf;
 
     //result = write(i2c_fd, cmd, 3);    
     //result = read(i2c_fd, buf, nMemAddressRead*2);
-    i2c_messageset_W[0].msgs = i2c_messages_W;
-    i2c_messageset_W[0].nmsgs = 1;
-
-    i2c_messageset_R[0].msgs = i2c_messages_R;
-    i2c_messageset_R[0].nmsgs = 1;
+    i2c_messageset[0].msgs = i2c_messages;
+    i2c_messageset[0].nmsgs = 2;
 
     memset(buf, 0, nMemAddressRead * 2);
 
-    if (ioctl(i2c_fd, I2C_RDWR, &i2c_messageset_W) < 0) {
-        printf("I2C Write cmd Error!\n");
-        return -1;
-    }
-
-    usleep(usecs);
-
-    if (ioctl(i2c_fd, I2C_RDWR, &i2c_messageset_R) < 0) {
+    if (ioctl(i2c_fd, I2C_RDWR, &i2c_messageset) < 0) {
         printf("I2C Read Error!\n");
         return -1;
     }
@@ -174,9 +159,9 @@ int INA219_I2CRead(uint8_t slaveAddr, uint8_t startAddress, uint16_t *data)
     return 0;
 } 
 
-int INA219_I2CWrite(uint8_t slaveAddr, uint8_t writeAddress, uint16_t data)
+int INA219_I2CWrite(uint8_t slaveAddr, uint16_t writeAddress, uint16_t data)
 { 
-    char cmd[3] = {(char)(writeAddress), (char)(data >> 8), (char)(data & 0x00FF)};
+    char cmd[4] = {(char)(writeAddress >> 8), (char)(writeAddress & 0x00FF), (char)(data >> 8), (char)(data & 0x00FF)};
     int result;
 
     struct i2c_msg i2c_messages[1];
@@ -184,7 +169,7 @@ int INA219_I2CWrite(uint8_t slaveAddr, uint8_t writeAddress, uint16_t data)
 
     i2c_messages[0].addr = slaveAddr;
     i2c_messages[0].flags = 0;
-    i2c_messages[0].len = 3;
+    i2c_messages[0].len = 4;
     i2c_messages[0].buf = (I2C_MSG_FMT*)cmd;
 
     i2c_messageset[0].msgs = i2c_messages;

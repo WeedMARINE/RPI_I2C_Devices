@@ -29,7 +29,7 @@
 
     //functions for INA219 
     //void INA219_I2CInit(void);
-    int INA219_I2CRead(uint8_t slaveAddr,uint16_t startAddress, uint16_t nMemAddressRead, uint16_t *data);
-    int INA219_I2CWrite(uint8_t slaveAddr,uint16_t writeAddress, uint16_t data);
+    int INA219_I2CRead(uint8_t slaveAddr,uint8_t startAddress, uint16_t *data);
+    int INA219_I2CWrite(uint8_t slaveAddr,uint8_t writeAddress, uint16_t data);
     //void INA219_I2CFreqSet(int freq);
 #endif

@@ -19,6 +19,7 @@
 #define FMT_STRING "\u2588\u2588"
 
 #define MLX_I2C_ADDR 0x33
+#define INA_I2C_ADDR 0x40
 
 int main(){
     int state = 0;

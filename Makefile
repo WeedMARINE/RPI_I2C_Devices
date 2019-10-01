@@ -4,7 +4,7 @@ SRC_DIR = examples/src/
 BUILD_DIR = examples/
 LIB_DIR = $(SRC_DIR)lib/
 
-examples = test main rawrgb step fbuf interp video hotspot sdlscale 
+examples = test main rawrgb step fbuf interp video hotspot sdlscale getcurrent
 examples_objects = $(addsuffix .o,$(addprefix $(SRC_DIR), $(examples)))
 examples_output = $(addprefix $(BUILD_DIR), $(examples))
 
@@ -23,7 +23,14 @@ libMLX90640_API.a: functions/MLX90640_API.o functions/$(I2C_MODE)_I2C_Driver.o
 	ar rcs $@ $^
 	ranlib $@
 
-functions/MLX90640_API.o functions/RPI_I2C_Driver.o functions/LINUX_I2C_Driver.o : CXXFLAGS+=-fPIC -I headers -shared $(I2C_LIBS)
+libINA219_API.so: functions/INA219_API.o functions/$(I2C_MODE)_I2C_Driver.o
+	$(CXX) -fPIC -shared $^ -o $@ $(I2C_LIBS)
+
+libINA219_API.a: functions/INA219_API.o functions/$(I2C_MODE)_I2C_Driver.o
+	ar rcs $@ $^
+	ranlib $@
+
+functions/INA219_API.o functions/MLX90640_API.o functions/RPI_I2C_Driver.o functions/LINUX_I2C_Driver.o : CXXFLAGS+=-fPIC -I headers -shared $(I2C_LIBS)
 
 $(examples_objects) : CXXFLAGS+=-std=c++11
 
@@ -39,10 +46,13 @@ $(BUILD_DIR)sdlscale: $(SRC_DIR)sdlscale.o libMLX90640_API.a
 $(BUILD_DIR)hotspot: $(SRC_DIR)hotspot.o $(LIB_DIR)fb.o libMLX90640_API.a
 	$(CXX) -L/home/pi/mlx90640-library $^ -o $@ $(I2C_LIBS)
 
-$(BUILD_DIR)test: $(SRC_DIR)test.o libMLX90640_API.a
+$(BUILD_DIR)test: $(SRC_DIR)test.o libMLX90640_API.a libINA219_API.a
 	$(CXX) -L/home/pi/mlx90640-library $^ -o $@ $(I2C_LIBS)
 
-$(BUILD_DIR)main: $(SRC_DIR)main.o libMLX90640_API.a
+$(BUILD_DIR)main: $(SRC_DIR)main.o libMLX90640_API.a libINA219_API.a
+	$(CXX) -L/home/pi/mlx90640-library $^ -o $@ $(I2C_LIBS)
+
+$(BUILD_DIR)getcurrent: $(SRC_DIR)getcurrent.o libMLX90640_API.a libINA219_API.a
 	$(CXX) -L/home/pi/mlx90640-library $^ -o $@ $(I2C_LIBS)
 
 $(BUILD_DIR)rawrgb: $(SRC_DIR)rawrgb.o libMLX90640_API.a

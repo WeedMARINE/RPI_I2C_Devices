@@ -42,11 +42,11 @@ int main(){
         power_mW = ina219.getPower_mW();
         loadvoltage = busvoltage + (shuntvoltage / 1000);
   
-        printf("Bus Voltage:   "); printf("%.6f", busvoltage); printf(" V\n");
-        printf("Shunt Voltage: "); printf("%.6f", shuntvoltage); printf(" mV\n");
-        printf("Load Voltage:  "); printf("%.6f", loadvoltage); printf(" V\n");
-        printf("Current:       "); printf("%.6f", current_mA); printf(" mA\n");
-        printf("Power:         "); printf("%.6f", power_mW); printf(" mW\n");
+        printf("Bus Voltage:   "); printf("%.2f", busvoltage); printf(" V\n");
+        printf("Shunt Voltage: "); printf("%.2f", shuntvoltage); printf(" mV\n");
+        printf("Load Voltage:  "); printf("%.2f", loadvoltage); printf(" V\n");
+        printf("Current:       "); printf("%.2f", current_mA); printf(" mA\n");
+        printf("Power:         "); printf("%.2f", power_mW); printf(" mW\n");
     }
 
     return 0;

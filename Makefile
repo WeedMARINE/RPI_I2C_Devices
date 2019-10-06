@@ -4,7 +4,7 @@ SRC_DIR = examples/src/
 BUILD_DIR = examples/
 LIB_DIR = $(SRC_DIR)lib/
 
-examples = test main rawrgb step fbuf interp video hotspot sdlscale getcurrent
+examples = test main rawrgb step fbuf interp video hotspot sdlscale getcurrent tempcolorarray
 examples_objects = $(addsuffix .o,$(addprefix $(SRC_DIR), $(examples)))
 examples_output = $(addprefix $(BUILD_DIR), $(examples))
 
@@ -47,6 +47,9 @@ $(BUILD_DIR)hotspot: $(SRC_DIR)hotspot.o $(LIB_DIR)fb.o libMLX90640_API.a
 	$(CXX) -L/home/pi/mlx90640-library $^ -o $@ $(I2C_LIBS)
 
 $(BUILD_DIR)test: $(SRC_DIR)test.o libMLX90640_API.a libINA219_API.a
+	$(CXX) -L/home/pi/mlx90640-library $^ -o $@ $(I2C_LIBS)
+
+$(BUILD_DIR)tempcolorarray: $(SRC_DIR)tempcolorarray.o libMLX90640_API.a libINA219_API.a
 	$(CXX) -L/home/pi/mlx90640-library $^ -o $@ $(I2C_LIBS)
 
 $(BUILD_DIR)main: $(SRC_DIR)main.o libMLX90640_API.a libINA219_API.a

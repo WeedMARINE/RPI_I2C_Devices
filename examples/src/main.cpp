@@ -60,7 +60,7 @@ void loop() {
 
         //round out put for logging
         int decimalP = 100; //100 for 2 decimal places
-        float nearest_To = roundf(mlx90640To[760] * decimalP) / decimalP;
+        float nearest_To = roundf(mlx90640To[384] * decimalP) / decimalP;
         float nearest_V = roundf(loadvoltage * decimalP) / decimalP;
         float nearest_I = roundf(current_mA * decimalP) / decimalP;
         float nearest_P = roundf(power_mW * decimalP) / decimalP;

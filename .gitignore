@@ -14,7 +14,7 @@ examples/rawrgb
 examples/hotspot
 examples/main
 examples/getcurrent
-examples/Thermal_Pixel_CSV
+examples/tempcolorarray
 bcm2835-*
 *.egg-info
 *.py[cod]

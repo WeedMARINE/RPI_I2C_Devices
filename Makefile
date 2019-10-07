@@ -53,7 +53,7 @@ $(BUILD_DIR)tempcolorarray: $(SRC_DIR)tempcolorarray.o libMLX90640_API.a libINA2
 	$(CXX) -L/home/pi/mlx90640-library $^ -o $@ $(I2C_LIBS)
 
 $(BUILD_DIR)main: $(SRC_DIR)main.o libMLX90640_API.a libINA219_API.a
-	$(CXX) -L/home/pi/mlx90640-library $^ -o $@ $(I2C_LIBS)
+	$(CXX) -pthread -L/home/pi/mlx90640-library $^ -o $@ $(I2C_LIBS)
 
 $(BUILD_DIR)getcurrent: $(SRC_DIR)getcurrent.o libMLX90640_API.a libINA219_API.a
 	$(CXX) -L/home/pi/mlx90640-library $^ -o $@ $(I2C_LIBS)

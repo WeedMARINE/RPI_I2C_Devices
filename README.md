@@ -81,8 +81,8 @@ sudo apt install libsdl2-dev
 
 Then just `make examples/<examplename>` and `sudo examples/<exampleame>` for one of the examples listed below:
 
-# mlx90640 Examples
-# 1.fbuf
+## mlx90640 Examples
+### 1.fbuf
 
 ```
 make examples/fbuf
@@ -93,7 +93,7 @@ This example uses direct-to-framebuffer rendering and black-blue-green-yellow-re
 
 If you gave issues with the output image, set "`IMAGE_SCALE`" to a smaller number.
 
-# 2.interp
+### 2.interp
 
 ```
 make examples/interp
@@ -106,7 +106,7 @@ It also has 2x bicubic resize filter.
 
 If you have issues with the output image, set "`IMAGE_SCALE`" to a smaller number.
 
-# 3.test
+### 3.test
 
 ```
 make examples/test
@@ -117,7 +117,7 @@ This example draws out to the console using ANSI colours and the full block char
 
 To see the actual temperature values, change "`FMT_STRING`" from the block char to the float format.
 
-# 4.step
+### 4.step
 
 ```
 make examples/step
@@ -126,7 +126,7 @@ sudo examples/step
 
 Attempt to run in step by step mode (experimental)
 
-# 5.sdlscale
+### 5.sdlscale
 
 Displays the MLX90640 sensor full-screen using hardware acceleration in SDL2.
 
@@ -147,7 +147,7 @@ sudo apt install libsdl2-dev
 
 On Raspbian Lite you may wish to build SDL2 from source with X support disabled to avoid pulling in ~200MB of dependencies. Before configuring/compiling ensure you have `libudev-dev` installed for input support.
 
-# 6.temp_csv_log
+### 6.temp_csv_log
 
 ```
 make examples/temp_csv_log
@@ -159,8 +159,8 @@ This example log temperature of a pixel with timestamp in csv format
 # INA219-library
 A port of Adafruit INA219 Arduino library
 
-# INA219 Examples
-# 1.getcurrent
+## INA219 Examples
+### 1.getcurrent
 
 ```
 make examples/getcurrent
@@ -169,7 +169,7 @@ sudo examples/getcurrent
 
 This example read voltage, current and power from INA219 registry and display them in the Terminal.
 
-# 1.main
+### 2.main
 
 ```
 make examples/main

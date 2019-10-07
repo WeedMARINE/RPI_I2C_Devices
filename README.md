@@ -1,5 +1,6 @@
-# mlx90640-library
-MLX90640 library functions
+# RPI_I2C_Devices
+A modification of Pimoroni's MLX90640 library for connecting I2C devices on Raspberry Pi
+
 
 ## Raspberry Pi Users
 
@@ -42,6 +43,8 @@ make I2C_MODE=LINUX
 
 ### BCM2835 Library Mode
 
+** NOT WOKING ON RPI4 (tested on 10/7/2019) **
+
 To use the bcm2835 library, install like so:
 
 
@@ -59,6 +62,8 @@ cd bcm2835-1.55
 make
 sudo make install
 ```
+# mlx90640-library
+MLX90640 library functions
 
 ### Dependencies
 
@@ -76,7 +81,8 @@ sudo apt install libsdl2-dev
 
 Then just `make examples/<examplename>` and `sudo examples/<exampleame>` for one of the examples listed below:
 
-# fbuf
+# mlx90640 Examples
+# 1.fbuf
 
 ```
 make examples/fbuf
@@ -87,7 +93,7 @@ This example uses direct-to-framebuffer rendering and black-blue-green-yellow-re
 
 If you gave issues with the output image, set "`IMAGE_SCALE`" to a smaller number.
 
-# interp
+# 2.interp
 
 ```
 make examples/interp
@@ -100,7 +106,7 @@ It also has 2x bicubic resize filter.
 
 If you have issues with the output image, set "`IMAGE_SCALE`" to a smaller number.
 
-# test
+# 3.test
 
 ```
 make examples/test
@@ -111,7 +117,7 @@ This example draws out to the console using ANSI colours and the full block char
 
 To see the actual temperature values, change "`FMT_STRING`" from the block char to the float format.
 
-# step
+# 4.step
 
 ```
 make examples/step
@@ -120,7 +126,7 @@ sudo examples/step
 
 Attempt to run in step by step mode (experimental)
 
-# sdlscale
+# 5.sdlscale
 
 Displays the MLX90640 sensor full-screen using hardware acceleration in SDL2.
 
@@ -140,4 +146,35 @@ sudo apt install libsdl2-dev
 ```
 
 On Raspbian Lite you may wish to build SDL2 from source with X support disabled to avoid pulling in ~200MB of dependencies. Before configuring/compiling ensure you have `libudev-dev` installed for input support.
-# RPI_I2C_Devices
+
+# 6.temp_csv_log
+
+```
+make examples/temp_csv_log
+sudo examples/temp_csv_log
+```
+
+This example log temperature of a pixel with timestamp in csv format
+
+# INA219-library
+A port of Adafruit INA219 Arduino library
+
+# INA219 Examples
+# 1.getcurrent
+
+```
+make examples/getcurrent
+sudo examples/getcurrent
+```
+
+This example read voltage, current and power from INA219 registry and display them in the Terminal.
+
+# 1.main
+
+```
+make examples/main
+sudo examples/main
+```
+
+This example log voltage, current, power and temperature pixels with time stamp in a uniquely named csv file.
+

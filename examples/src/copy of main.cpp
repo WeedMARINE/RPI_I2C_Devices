@@ -15,6 +15,7 @@
 #define INA_I2C_ADDR 0x40
 
 std::atomic_bool stop = false;
+std::fstream fout
 void loop() {
     while(!stop)
     {
@@ -72,29 +73,23 @@ int main(){
     strftime( ddMONtime, sizeof(ddMONtime), "%d%b%H%M", timeinfo ) ;
     const std::string path_suffix = "PowerAndTemperatureLog.csv" ;
     const std::string file_name = ddMONtime +  path_suffix ;
-    std::fstream fout;
+    //std::fstream fout;
     fout.open(file_name, std::ios::out | std::ios::app);
     
 
     
-    //while (1){
-    for (int i = 0; i < 100; i++){
-        
-        //get data from MLX90640
-        MLX90640_GetFrameData(MLX_I2C_ADDR, frame);
-        //MLX90640_InterpolateOutliers(frame, eeMLX90640);
-        eTa = MLX90640_GetTa(frame, &mlx90640);
-        MLX90640_CalculateTo(frame, &mlx90640, emissivity, eTa, mlx90640To);
+    //Loop in another thread
+    std::thread t(loop); // Separate thread for loop.
 
-        MLX90640_BadPixelsCorrection((&mlx90640)->brokenPixels, mlx90640To, 1, &mlx90640);
-        MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
+    // Wait for input character (this will suspend the main thread, but the loop
+    // thread will keep running).
+    std::cin.get();
 
+    // Set the atomic boolean to true. The loop thread will exit from 
+    // loop and terminate.
+    stop = true;
 
-    
-        //append data to csv
-        time (&rawtime);
-        fout << rawtime << ", " << mlx90640To[760]<< "\n";
-    }
+    t.join();
     
     fout.close(); 
 
